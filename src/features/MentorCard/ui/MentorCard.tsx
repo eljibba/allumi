@@ -10,8 +10,8 @@ interface IMentorCard {
 
 export const MentorCard = (data: IMentorCard) => {
   return (
-    <div className="flex gap-2 w-[350px]">
-      <div className="flex flex-col gap-1">
+    <div className="flex gap-2 w-[380px]">
+      <div className="flex flex-col gap-2">
         <Image
           className="relative rounded-lg"
           src={data.imagePath}
@@ -20,7 +20,7 @@ export const MentorCard = (data: IMentorCard) => {
           height={180}
           priority
         />
-        <p className="text-lg">{data.name}</p>
+        <p className="text-lg font-semibold">{data.name}</p>
         <div className={cn('bg-gray-800 w-fit px-2 py-0.5 rounded-full font-bold', {
           'bg-sky-500': data.job === 'frontend',
           'bg-red-500': data.job === 'backend',

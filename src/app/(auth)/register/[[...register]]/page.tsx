@@ -1,13 +1,32 @@
-import { FormInput } from "@/features/FormInput/FormInput";
 import axiosInstance from "@/shared/api/axiosInstance";
 import Button from "@/shared/ui/Button/Button";
-import { redirect } from 'next/navigation'
+import { FormInput } from "@/features/FormInput/FormInput";
+import { redirect } from "next/navigation";
 
 const registerAction = async (formData: FormData) => {
   'use server';
-  console.log(formData);
-  redirect('/');
-  // axiosInstance.post('');
+  
+  const body = {
+    login: formData.get('login'),
+    email: formData.get('email'),
+    password: formData.get('password'),
+    bio: formData.get('bio'),
+    educationInfo: formData.get('educationInfo'),
+    phone: formData.get('phone'),
+    telegram: formData.get('telegram'),
+    otherContacts: formData.get('otherContacts'),
+    skills: [formData.get('skills')],
+    type: formData.get('type'),
+  };
+  console.log(body);
+
+  const res = await axiosInstance.post('http://77.232.128.185:80/auth/register', body, {
+    withCredentials: false,
+  })
+  if (res.status !== 200) {
+    return;
+  }
+  redirect('/login');
 };
 
 const RegisterPage = ({}) => {
@@ -78,7 +97,7 @@ const RegisterPage = ({}) => {
               name="skills"
             />
             <div className="flex flex-col gap-1">
-              <label htmlFor="email">Роль</label>
+              <label htmlFor="type">Role</label>
               <select
                 id="type"
                 name="type"

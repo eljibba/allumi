@@ -1,9 +1,20 @@
 import { FormInput } from "@/features/FormInput";
+import axiosInstance from "@/shared/api/axiosInstance";
 import Button from "@/shared/ui/Button/Button";
+import { redirect } from "next/navigation";
 
-const signInAction = async (props: any) => {
+const signInAction = async (formData: FormData) => {
   'use server';
-  console.log(props);
+  const body = {
+    login: formData.get('login'),
+    password: formData.get('password'),
+  };
+  const res = await axiosInstance.post('http://77.232.128.185:80/auth/login', body);
+  if (res.status !== 200) {
+    return;
+  }
+  console.log(res);
+  redirect('/');
 };
 
 const SignInPage = ({}) => {
@@ -22,12 +33,6 @@ const SignInPage = ({}) => {
               id="login"
               type="text"
               name="login"
-            />
-            <FormInput
-              label="Email"
-              id="email"
-              type="email"
-              name="email"
             />
             <FormInput
               label="Password"
